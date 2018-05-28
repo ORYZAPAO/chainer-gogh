@@ -2,7 +2,8 @@
 import chainer
 from chainer import cuda
 import chainer.functions as F
-from chainer.functions import caffe
+##from chainer.functions import caffe
+from chainer.links import caffe
 from chainer import Variable, optimizers
 
 
@@ -19,7 +20,8 @@ class NIN:
         y2 = self.model.cccp4(F.relu(self.model.cccp3(x1)))
         x2 = F.relu(self.model.conv3(F.average_pooling_2d(F.relu(y2), 3, stride=2)))
         y3 = self.model.cccp6(F.relu(self.model.cccp5(x2)))
-        x3 = F.relu(getattr(self.model,"conv4-1024")(F.dropout(F.average_pooling_2d(F.relu(y3), 3, stride=2), train=False)))
+        ##x3 = F.relu(getattr(self.model,"conv4-1024")(F.dropout(F.average_pooling_2d(F.relu(y3), 3, stride=2), train=False)))
+        x3 = F.relu(getattr(self.model,"conv4-1024")(F.dropout(F.average_pooling_2d(F.relu(y3), 3, stride=2))))
         return [y0,x1,x2,x3]
 
 class VGG:
